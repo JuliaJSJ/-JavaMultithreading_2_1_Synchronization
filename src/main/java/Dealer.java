@@ -16,7 +16,7 @@ public class Dealer {
                 cars.add(new Car());
                 System.out.println(Thread.currentThread().getName() + " выпустил 1 автомобиль.");
                 synchronized (cars) {
-                    notify();
+                    cars.notify();
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -24,12 +24,14 @@ public class Dealer {
         }
     }
 
-    public synchronized void sellCar() {
+    public void sellCar() {
         try {
             System.out.println(Thread.currentThread().getName() + " зашел в автосалон.");
             while (cars.size() == 0) {
                 System.out.println("нет доступных машин");
-                wait();
+                synchronized (cars) {
+                    cars.wait();
+                }
             }
 
             Thread.sleep(SELL_TIME);
