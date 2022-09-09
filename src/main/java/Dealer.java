@@ -15,7 +15,7 @@ public class Dealer {
                 Thread.sleep(GET_TIME);
                 cars.add(new Car());
                 System.out.println(Thread.currentThread().getName() + " выпустил 1 автомобиль.");
-                synchronized (this) {
+                synchronized (cars) {
                     notify();
                 }
             } catch (InterruptedException e) {
